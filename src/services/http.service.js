@@ -9,8 +9,8 @@ class HttpService {
             api,
             method: 'GET'
         }).then(response => {
-            return response.data
-        })
+            return response.data;
+        });
     }
 
     create(api, body) {
@@ -18,7 +18,7 @@ class HttpService {
             api,
             method: 'POST',
             body
-        })
+        });
     }
 
     update(api, body) {
@@ -26,7 +26,7 @@ class HttpService {
             api,
             method: 'PUT',
             body
-        })
+        });
     }
 
     delete(api, id) {
@@ -34,24 +34,24 @@ class HttpService {
             api,
             method: 'PUT',
             id
-        })
+        });
     }
 
     makeRequest(requestInfo) {
         const handled = this.handleRequest(requestInfo);
         if (handled) {
-            return handled
+            return handled;
         }
         // request logic
     }
 
     handleRequest(requestInfo) {
-        const handler = this.httpHandlers.find(handler => handler.match === requestInfo.api)
+        const handler = this.httpHandlers.find(handler => handler.match === requestInfo.api);
         if (handler) return handler.process(requestInfo);
     }
 
     addHandler(match, process) {
-        this.httpHandlers.push({match, process})
+        this.httpHandlers.push({match, process});
     }
 }
 
