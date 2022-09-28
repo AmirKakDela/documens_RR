@@ -5,6 +5,7 @@
             <div class='document-category__name'>{{ category.name }}</div>
             <div class='document-category__description'>{{ category.description }}</div>
         </div>
+        <document-actions></document-actions>
     </div>
     <template v-if='isOpen'>
         <document-child v-for='child in category.children' :key='child.id' :child='child'
@@ -16,10 +17,11 @@
 <script>
 import DocumentChild from '@/components/DocumentChild';
 import ArrowButton from '@/components/common/ArrowButton';
+import DocumentActions from '@/components/DocumentActions';
 
 export default {
     name: 'document-category',
-    components: {ArrowButton, DocumentChild},
+    components: {DocumentActions, ArrowButton, DocumentChild},
     props: {
         category: Object
     },
@@ -27,11 +29,6 @@ export default {
         return {
             isOpen: true
         };
-    },
-    computed: {
-        arrowStyle: {
-            transform: 'rotate(90deg)'
-        }
     }
 };
 </script>
@@ -43,6 +40,7 @@ export default {
     height: 48px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 0 16px;
 
     &__main {
