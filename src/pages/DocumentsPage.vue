@@ -1,8 +1,8 @@
 <template>
     <document-header></document-header>
-    <input-search v-model:value='inputValue'></input-search>
+    <input-search v-model:value='inputValue' style='margin-bottom: 20px;'></input-search>
     <!--  todo убрать v-if="documents"-->
-    <documents-list v-model:documents='documents' v-if='documents' :inputValue='inputValue'></documents-list>
+    <documents-list v-model:documents='documents' v-if='!loading' :inputValue='inputValue'></documents-list>
     <div v-else>loading...</div>
 </template>
 
@@ -19,12 +19,15 @@ export default {
     data() {
         return {
             documents: null,
-            inputValue: ''
+            inputValue: '',
+            loading: true
         };
     },
     methods: {
         async getDocuments() {
+            this.loading = true;
             this.documents = await documentsService.fetchDocuments();
+            this.loading = false;
         }
     },
     mounted() {

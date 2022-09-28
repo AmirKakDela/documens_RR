@@ -4,39 +4,55 @@
       "categories": [
         {
           "id": 0,
-          "name": "category 1 ",
-          "description": "description 1 description 1 description 1 description 1 ",
+          "name": "Обязательные для всех",
+          "description": "Документы, обязательные для всех сотрудников без исключения",
           "children": [
             {
               "id": 97,
-              "name": "child of category",
-              "description": "this is a child of category"
+              "name": "Паспорт",
+              "description": "Для всех"
             },
             {
               "id": 98,
-              "name": "child 2 of category",
-              "description": "this is a child 2 of category"
+              "name": "ИНН",
+              "description": "Для всех"
             }
           ]
         },
         {
           "id": 1,
-          "name": "category 2 ",
-          "description": "description 2 description 2 description 2 description 2 ",
+          "name": "Обязательные для трудоустройства",
+          "description": "Документы, без которых невозможно трудоустройство человека на какую бы ни было должность в компании в независимости от гражданства",
           "children": [
             {
               "id": 99,
-              "name": "child of category 2",
-              "description": "this is a child  of category 2"
+              "name": "Водительское удостоверение",
+              "description": "Права на вождение автомобиля"
             }
           ]
+        },
+        {
+          "id": 2,
+          "name": "Специальные",
+          "description": "",
+          "children": []
         }
       ],
       "children": [
         {
           "id": 90,
-          "name": "child",
-          "description": "this is a child"
+          "name": "Тестовое задание кандидата",
+          "description": "Россия, Белоруссия, Украина, администратор филиала, повар-сушист, повар-пиццемейкер, повар горячего цеха"
+        },
+        {
+          "id": 96,
+          "name": "Трудовой договор",
+          "description": ""
+        },
+        {
+          "id": 96,
+          "name": "Мед. книжка",
+          "description": ""
         }
       ]
     }

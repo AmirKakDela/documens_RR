@@ -78,8 +78,6 @@ export default {
 
 <style scoped lang='less'>
 .document-list {
-    margin-top: 20px;
-
     &__child {
         margin-top: 16px;
     }
