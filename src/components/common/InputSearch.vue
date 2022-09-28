@@ -1,6 +1,10 @@
 <template>
     <div class='input-search__wrapper'>
-        <input type='text' placeholder='Поиск' class='input-search' :value='value' @input='updateInput'>
+        <label class='input-search__search' for='input-search'>
+            <base-icon name='search'></base-icon>
+        </label>
+        <input type='text' placeholder='Поиск' class='input-search' :value='value' @input='updateInput'
+               id='input-search'>
         <base-button class='input-search__clear' :onlyIcon='true' v-if='value' @click='clear'>
             <template #icon>
                 <base-icon name='cross'></base-icon>
@@ -34,11 +38,11 @@ export default {
 <style scoped lang='less'>
 .input-search {
     width: 564px;
-    padding: 10px;
     border-width: 0;
     border-bottom: 1px solid #BFC9E0;
     outline: none;
     font-size: 15px;
+    padding: 10px 10px 10px 25px;
 
     &::placeholder {
         font-style: italic;
@@ -51,6 +55,22 @@ export default {
         top: 25%;
         padding: 5px;
         border: none;
+
+        &:hover {
+            box-shadow: none;
+        }
+
+        &:active {
+            position: absolute;
+            top: 25%;
+        }
+    }
+
+    &__search {
+        position: absolute;
+        left: 0;
+        top: 25%;
+        cursor: text;
     }
 
     &:focus {

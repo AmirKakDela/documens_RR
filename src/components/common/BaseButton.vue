@@ -30,10 +30,21 @@ export default {
     border-radius: 50px;
     padding: 0 10px;
     cursor: pointer;
+    transition: .15s ease-in-out all;
 
     &__text {
         color: #000;
         font-size: 12px;
+    }
+
+    &:hover {
+        border-color: #0066FF;
+        box-shadow: 0 5px 12px -4px rgba(39, 73, 99, 0.11) inset;
+    }
+
+    &:active {
+        position: relative;
+        top: 1px;
     }
 }
 

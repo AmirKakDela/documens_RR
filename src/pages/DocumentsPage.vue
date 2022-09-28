@@ -1,5 +1,5 @@
 <template>
-    <v-header></v-header>
+    <document-header></document-header>
     <input-search v-model:value='inputValue'></input-search>
     <!--  todo убрать v-if="documents"-->
     <documents-list v-model:documents='documents' v-if='documents' :inputValue='inputValue'></documents-list>
@@ -7,15 +7,15 @@
 </template>
 
 <script>
-import VHeader from '@/components/VHeader';
-import InputSearch from '@/components/InputSearch';
+import DocumentHeader from '@/components/DocumentHeader';
+import InputSearch from '@/components/common/InputSearch';
 import DocumentsList from '@/components/DocumentsList';
 import {DocumentsService} from '@/services/documents.service';
 
 const documentsService = new DocumentsService();
 export default {
     name: 'DocumentsPage',
-    components: {VHeader, InputSearch, DocumentsList},
+    components: {DocumentHeader, InputSearch, DocumentsList},
     data() {
         return {
             documents: null,

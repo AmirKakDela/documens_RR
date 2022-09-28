@@ -2,7 +2,7 @@
     <div class='header'>
         <h1 class='title'>Документы</h1>
         <div class='header__actions'>
-            <v-bookmark></v-bookmark>
+            <bookmark-button></bookmark-button>
             <create-button>Новый тип</create-button>
             <create-button>Новый документ</create-button>
         </div>
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import VBookmark from '@/components/common/VBookmark';
 import CreateButton from '@/components/common/CreateButton';
+import BookmarkButton from '@/components/common/BookmarkButton';
 
 export default {
     name: 'v-header',
-    components: {CreateButton, VBookmark}
+    components: {CreateButton, BookmarkButton}
 };
 </script>
 

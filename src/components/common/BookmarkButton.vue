@@ -11,7 +11,7 @@ import BaseIcon from '@/components/common/BaseIcon';
 import BaseButton from '@/components/common/BaseButton';
 
 export default {
-    name: 'VBookmark',
+    name: 'bookmark-button',
     components: {BaseIcon, BaseButton}
 };
 </script>
