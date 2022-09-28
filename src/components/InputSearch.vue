@@ -24,18 +24,24 @@ export default {
 
 <style scoped lang='less'>
 .input-search {
-    width: 500px;
+    width: 564px;
     padding: 10px;
     border-width: 0;
-    border-bottom: 2px solid gray;
+    border-bottom: 1px solid #BFC9E0;
     outline: none;
+    font-size: 15px;
+
+    &::placeholder {
+        font-style: italic;
+        font-size: 15px;
+    }
 
     &__clear {
         background-color: red;
     }
 
     &:focus {
-        border-bottom-color: #11aeee;
+        border-bottom-color: #0066FF;
     }
 }
 

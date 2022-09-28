@@ -1,8 +1,8 @@
 <template>
     <div class='document-category'>
         <button @click='isOpen = !isOpen'>open</button>
-        {{ category.name }}
-        {{ category.description }}
+        <div class='document-category__name'>{{ category.name }}</div>
+        <div class='document-category__category'>{{ category.description }}</div>
     </div>
     <template v-if='isOpen'>
         <document-child v-for='child in category.children' :key='child.id' :child='child'
@@ -30,11 +30,21 @@ export default {
 
 <style scoped lang='less'>
 .document-category {
-    padding: 10px;
     border: 1px solid black;
+    width: 1160px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+
+    &__name {
+        font-size: 15px;
+        color: #000;
+        font-weight: 600;
+    }
 
     &__child {
-        margin-left: 10px;
+        margin-left: 15px;
     }
 }
 

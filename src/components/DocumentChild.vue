@@ -14,8 +14,12 @@ export default {
 <style scoped lang='less'>
 
 .document-child {
-    padding: 6px;
+    padding: 0 6px;
     border: 1px solid black;
+    width: 1145px;
+    height: 35px;
+    display: flex;
+    align-items: center;
 }
 
 </style>
