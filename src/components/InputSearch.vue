@@ -1,13 +1,22 @@
 <template>
     <div class='input-search__wrapper'>
         <input type='text' placeholder='Поиск' class='input-search' :value='value' @input='updateInput'>
-        <button class='input-search__clear' v-if='value' @click='clear'>X</button>
+        <base-button class='input-search__clear' :onlyIcon='true' v-if='value' @click='clear'>
+            <template #icon>
+                <base-icon name='cross'></base-icon>
+            </template>
+        </base-button>
     </div>
 </template>
 
 <script>
+import BaseIcon from '@/components/common/BaseIcon';
+import BaseButton from '@/components/common/BaseButton';
+
 export default {
     name: 'input-search',
+    components: {BaseButton, BaseIcon},
+
     props: {
         value: String
     },
@@ -37,7 +46,11 @@ export default {
     }
 
     &__clear {
-        background-color: red;
+        position: absolute;
+        right: 0;
+        top: 25%;
+        padding: 5px;
+        border: none;
     }
 
     &:focus {
@@ -46,6 +59,7 @@ export default {
 }
 
 .input-search__wrapper {
-
+    width: 564px;
+    position: relative;
 }
 </style>

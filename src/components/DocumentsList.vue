@@ -46,9 +46,9 @@ export default {
             this.filteredDocuments.categories = this.filteredDocuments.categories
                 .filter(category => {
                     const includesCategory = category.name.includes(this.inputValue);
-                    const includesChildrenOfCategory = this.filterChildren(category.children).length;
                     if (includesCategory) return true;
-                    else if (!includesCategory && includesChildrenOfCategory) {
+                    const includesChildrenOfCategory = this.filterChildren(category.children).length;
+                    if (!includesCategory && includesChildrenOfCategory) {
                         category.children = this.filterChildren(category.children);
                         return true;
                     }
@@ -81,7 +81,7 @@ export default {
     margin-top: 20px;
 
     &__child {
-        margin-top: 10px;
+        margin-top: 16px;
     }
 }
 

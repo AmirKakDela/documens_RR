@@ -15,8 +15,8 @@ export default {
 
 .document-child {
     padding: 0 6px;
-    border: 1px solid black;
-    width: 1145px;
+    border: 1px solid #DFE4EF;
+    width: 1160px;
     height: 35px;
     display: flex;
     align-items: center;
