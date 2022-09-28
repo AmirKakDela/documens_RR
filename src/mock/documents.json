@@ -4,29 +4,29 @@
       "categories": [
         {
           "id": 0,
-          "title": "category 1 ",
+          "name": "category 1 ",
           "description": "description 1 description 1 description 1 description 1 ",
           "children": [
             {
               "id": 97,
-              "title": "child of category",
+              "name": "child of category",
               "description": "this is a child of category"
             },
             {
               "id": 98,
-              "title": "child 2 of category",
+              "name": "child 2 of category",
               "description": "this is a child 2 of category"
             }
           ]
         },
         {
           "id": 1,
-          "title": "category 2 ",
+          "name": "category 2 ",
           "description": "description 2 description 2 description 2 description 2 ",
           "children": [
             {
               "id": 99,
-              "title": "child of category 2",
+              "name": "child of category 2",
               "description": "this is a child  of category 2"
             }
           ]
@@ -35,7 +35,7 @@
       "children": [
         {
           "id": 90,
-          "title": "child",
+          "name": "child",
           "description": "this is a child"
         }
       ]

@@ -3,6 +3,7 @@
     <input-search v-model:value='inputValue'></input-search>
     <!--  todo убрать v-if="documents"-->
     <documents-list v-model:documents='documents' v-if='documents' :inputValue='inputValue'></documents-list>
+    <div v-else>loading...</div>
 </template>
 
 <script>

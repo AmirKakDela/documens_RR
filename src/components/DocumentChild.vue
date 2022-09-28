@@ -1,5 +1,5 @@
 <template>
-    <div class='document-child'>{{ child.title }}</div>
+    <div class='document-child'>{{ child.name }}</div>
 </template>
 
 <script>

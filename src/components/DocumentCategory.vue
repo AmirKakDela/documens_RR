@@ -1,7 +1,7 @@
 <template>
     <div class='document-category'>
         <button @click='isOpen = !isOpen'>open</button>
-        {{ category.title }}
+        {{ category.name }}
         {{ category.description }}
     </div>
     <template v-if='isOpen'>
