@@ -45,7 +45,7 @@ export default {
             this.filteredDocuments = this.getCopyDocuments();
             this.filteredDocuments.categories = this.filteredDocuments.categories
                 .filter(category => {
-                    const includesCategory = category.name.includes(this.inputValue);
+                    const includesCategory = category.name.toLowerCase().includes(this.inputValue.toLowerCase());
                     if (includesCategory) return true;
                     const includesChildrenOfCategory = this.filterChildren(category.children).length;
                     if (!includesCategory && includesChildrenOfCategory) {
@@ -57,7 +57,7 @@ export default {
         },
         filterChildren(children) {
             return children.filter(child => {
-                return child.name.includes(this.inputValue);
+                return child.name.toLowerCase().includes(this.inputValue.toLowerCase());
             });
         },
         getCopyDocuments() {

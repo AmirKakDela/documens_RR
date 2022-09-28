@@ -1,9 +1,9 @@
 <template>
     <div class='document-category'>
         <div class='document-category__main'>
-            <arrow-button :toTop='isOpen' @click='isOpen = !isOpen'></arrow-button>
+            <arrow-button :toTop='isOpen' @click='open' :disabled='!category.children.length'></arrow-button>
             <div class='document-category__name'>{{ category.name }}</div>
-            <div class='document-category__description'>{{ category.description }}</div>
+            <div class='document-category__description description'>{{ category.description }}</div>
         </div>
         <document-actions></document-actions>
     </div>
@@ -29,11 +29,16 @@ export default {
         return {
             isOpen: true
         };
+    },
+    methods: {
+        open() {
+            this.isOpen = !this.isOpen;
+        }
     }
 };
 </script>
 
-<style scoped lang='less'>
+<style lang='less'>
 .document-category {
     border: 1px solid #DFE4EF;
     width: 1160px;
@@ -42,6 +47,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
+    gap: 10px;
 
     &__main {
         display: flex;
@@ -50,21 +56,30 @@ export default {
         gap: 15px;
     }
 
-    &__description {
-        color: #8E9CBB;
-        font-size: 11px;
-    }
-
     &__name {
         font-size: 15px;
         color: #000;
         font-weight: 500;
+        white-space: nowrap;
     }
+
 
     &__child {
         margin-left: 15px;
         width: 1145px;
     }
+}
+
+
+.description {
+    color: #77829f;
+    font-size: 11px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+    background-image: linear-gradient(to right, currentColor 0%, currentColor 98%, rgba(0, 0, 0, 0));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 </style>

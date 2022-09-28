@@ -46,6 +46,16 @@ export default {
         position: relative;
         top: 1px;
     }
+
+    &:disabled {
+        &:hover {
+            position: static;
+            border: 1px solid #D3D8DF;
+            box-shadow: none;
+        }
+        cursor: default;
+        background-color: #f5f5f5;
+    }
 }
 
 .only-icon {

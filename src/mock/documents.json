@@ -10,12 +10,14 @@
             {
               "id": 97,
               "name": "Паспорт",
-              "description": "Для всех"
+              "description": "Для всех",
+              "required": true
             },
             {
               "id": 98,
               "name": "ИНН",
-              "description": "Для всех"
+              "description": "Для всех",
+              "required": true
             }
           ]
         },
