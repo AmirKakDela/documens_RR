@@ -11,7 +11,9 @@
             <document-child
                 v-for='child in filteredDocuments.children'
                 :key='child.id'
-                :child='child'>
+                :child='child'
+                @dropChild='onDropChild'
+            >
             </document-child>
         </div>
     </div>
@@ -20,6 +22,7 @@
 <script>
 import DocumentCategory from '@/components/DocumentCategory';
 import DocumentChild from '@/components/DocumentChild';
+import {getCopy} from '@/utils/utils';
 
 export default {
     name: 'document-list',
@@ -28,6 +31,7 @@ export default {
         documents: Object,
         inputValue: String
     },
+    emits: ['update:documents'],
     data() {
         return {
             filteredDocuments: {categories: [], children: []}
@@ -61,13 +65,45 @@ export default {
             });
         },
         getCopyDocuments() {
-            // в идеале использовать Lodash или рекурсивную функцию копирования
-            return JSON.parse(JSON.stringify(this.documents));
+            return getCopy(this.documents);
+        },
+        onDropChild(dragItem, dropItem) {
+            const copyDocuments = this.getCopyDocuments();
+            let dragCategory = null;
+            let dropCategory = null;
+
+            if (dragItem.categoryId) {
+                dragCategory = copyDocuments.categories.find(item => item.id === dragItem.categoryId);
+            }
+            if (dropItem.categoryId) {
+                dropCategory = copyDocuments.categories.find(item => item.id === dropItem.categoryId);
+            }
+
+            if (dragItem.categoryId === dropItem.categoryId) {
+                if (!dragCategory && !dropCategory) {
+                    const dragIndex = copyDocuments.children.findIndex(item => item.id === dragItem.id);
+                    const dropIndex = copyDocuments.children.findIndex(item => item.id === dropItem.id);
+                    [copyDocuments.children[dragIndex], copyDocuments.children[dropIndex]] = [copyDocuments.children[dropIndex], copyDocuments.children[dragIndex]];
+                } else if (dragCategory && dropCategory) {
+                    const category = dragCategory = dropCategory;
+                    const dragIndex = dragCategory.findIndex(item => item.id === dragItem.id);
+                    const dropIndex = dropCategory.findIndex(item => item.id === dropItem.id);
+                    [category.children[dragIndex], category.children[dropIndex]] = [category.children[dropIndex], category.children[dragIndex]];
+                }
+            }
+            this.$emit('update:documents', copyDocuments);
         }
     },
     watch: {
         inputValue() {
             this.filterDocuments();
+        },
+        documents: {
+            handler() {
+                this.filteredDocuments = this.getCopyDocuments();
+                this.filterDocuments();
+            },
+            deep: true
         }
     },
     mounted() {

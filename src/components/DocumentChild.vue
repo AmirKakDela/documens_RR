@@ -1,5 +1,11 @@
 <template>
-    <div class='document document-child'>
+    <div class='document document-child'
+         draggable='true'
+         @dragstart='onDragStart($event, child)'
+         @drop='onDrop($event, child)'
+         @dragover.prevent
+         @dragenter.prevent
+    >
         <div class='document__main'>
             <div class='document__name'>{{ child.name }}</div>
             <div class='document__required' v-if='child.required'>Обязательный</div>
@@ -19,6 +25,17 @@ export default {
     components: {DocumentActions},
     props: {
         child: Object
+    },
+    emits: ['dropChild'],
+    methods: {
+        onDragStart(e, child) {
+            e.dataTransfer.setData('dragItem', JSON.stringify(child));
+        },
+        onDrop(e, dropItem) {
+            const dragItem = JSON.parse(e.dataTransfer.getData('dragItem'));
+            this.$emit('dropChild', dragItem, dropItem);
+        }
+
     }
 };
 </script>
