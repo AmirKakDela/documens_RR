@@ -1,11 +1,13 @@
 <template>
-    <div class='document-category'>
-        <div class='document-category__main'>
+    <div class='document document-category'>
+        <div class='document__main'>
             <arrow-button :toTop='isOpen' @click='open' :disabled='!category.children.length'></arrow-button>
-            <div class='document-category__name'>{{ category.name }}</div>
-            <div class='document-category__description description'>{{ category.description }}</div>
+            <div class='document__name'>{{ category.name }}</div>
+            <div class='document__description'>{{ category.description }}</div>
         </div>
-        <document-actions></document-actions>
+        <div class='document__actions'>
+            <document-actions></document-actions>
+        </div>
     </div>
     <template v-if='isOpen'>
         <document-child v-for='child in category.children' :key='child.id' :child='child'
@@ -39,7 +41,7 @@ export default {
 </script>
 
 <style lang='less'>
-.document-category {
+.document {
     border: 1px solid #DFE4EF;
     width: 1160px;
     height: 48px;
@@ -52,8 +54,12 @@ export default {
     &__main {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         gap: 15px;
+        width: 90%;
+    }
+
+    &__actions {
+        width: 10%;
     }
 
     &__name {
@@ -61,25 +67,32 @@ export default {
         color: #000;
         font-weight: 500;
         white-space: nowrap;
+        //todo добавить overflow
     }
 
+    &__required {
+        color: #FF238D;
+        font-size: 11px;
+    }
 
+    &__description {
+        color: #77829f;
+        font-size: 11px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: clip;
+        background-image: linear-gradient(to right, currentColor 0%, currentColor 98%, rgba(0, 0, 0, 0));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+.document-category {
     &__child {
         margin-left: 15px;
-        width: 1145px;
+        width: 1145px !important;
     }
 }
 
-
-.description {
-    color: #77829f;
-    font-size: 11px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: clip;
-    background-image: linear-gradient(to right, currentColor 0%, currentColor 98%, rgba(0, 0, 0, 0));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
 
 </style>

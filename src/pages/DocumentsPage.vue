@@ -1,7 +1,7 @@
 <template>
     <document-header></document-header>
     <input-search v-model:value='inputValue' style='margin-bottom: 20px;'></input-search>
-    <!--  todo убрать v-if="documents"-->
+    <!--  сделать нормальный Loading-->
     <documents-list v-model:documents='documents' v-if='!loading' :inputValue='inputValue'></documents-list>
     <div v-else>loading...</div>
 </template>

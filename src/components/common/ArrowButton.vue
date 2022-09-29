@@ -26,6 +26,7 @@ export default {
 .arrow-btn {
     height: 22px;
     width: 22px;
+    min-width: 22px;
 
     &.to-top {
         transform: rotate(180deg);

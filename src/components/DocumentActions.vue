@@ -32,7 +32,7 @@ export default {
 .document-actions {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 22px;
 
     .base-btn {
