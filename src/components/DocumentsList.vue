@@ -4,7 +4,8 @@
             <document-category
                 v-for='category in filteredDocuments.categories'
                 :key='category.id'
-                :category='category'>
+                :category='category'
+                @dropChild='onDropChild'>
             </document-category>
         </div>
         <div class='document-list__child'>
@@ -72,10 +73,10 @@ export default {
             let dragCategory = null;
             let dropCategory = null;
 
-            if (dragItem.categoryId) {
+            if (dragItem.categoryId !== null) {
                 dragCategory = copyDocuments.categories.find(item => item.id === dragItem.categoryId);
             }
-            if (dropItem.categoryId) {
+            if (dropItem.categoryId !== null) {
                 dropCategory = copyDocuments.categories.find(item => item.id === dropItem.categoryId);
             }
 
@@ -86,9 +87,13 @@ export default {
                     [copyDocuments.children[dragIndex], copyDocuments.children[dropIndex]] = [copyDocuments.children[dropIndex], copyDocuments.children[dragIndex]];
                 } else if (dragCategory && dropCategory) {
                     const category = dragCategory = dropCategory;
-                    const dragIndex = dragCategory.findIndex(item => item.id === dragItem.id);
-                    const dropIndex = dropCategory.findIndex(item => item.id === dropItem.id);
+                    const dragIndex = dragCategory.children.findIndex(item => item.id === dragItem.id);
+                    const dropIndex = dropCategory.children.findIndex(item => item.id === dropItem.id);
                     [category.children[dragIndex], category.children[dropIndex]] = [category.children[dropIndex], category.children[dragIndex]];
+                }
+            } else {
+                if (dragCategory && !dropCategory) {
+                    //...
                 }
             }
             this.$emit('update:documents', copyDocuments);

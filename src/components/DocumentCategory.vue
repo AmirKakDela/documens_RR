@@ -11,7 +11,7 @@
     </div>
     <template v-if='isOpen'>
         <document-child v-for='child in category.children' :key='child.id' :child='child'
-                        class='document-category__child'
+                        class='document-category__child' @dropChild='onDropChild'
         ></document-child>
     </template>
 </template>
@@ -27,6 +27,7 @@ export default {
     props: {
         category: Object
     },
+    emits: ['dropChild'],
     data() {
         return {
             isOpen: true
@@ -35,6 +36,9 @@ export default {
     methods: {
         open() {
             this.isOpen = !this.isOpen;
+        },
+        onDropChild(dragItem, dropItem) {
+            this.$emit('dropChild', dragItem, dropItem)
         }
     }
 };
