@@ -5,7 +5,9 @@
                 v-for='category in filteredDocuments.categories'
                 :key='category.id'
                 :category='category'
-                @dropChild='onDropChild'>
+                @dropChild='onDropChild'
+                @drop='onDropCategory'
+            >
             </document-category>
         </div>
         <div class='document-list__child'>
@@ -112,6 +114,15 @@ export default {
                     dropCategory.children[dropIndex] = dragItem;
                 }
             }
+            this.$emit('update:documents', copyDocuments);
+        },
+        onDropCategory(dragItem, dropItem) {
+            const copyDocuments = this.getCopyDocuments();
+            const dropIndex = copyDocuments.categories.findIndex(item => item.id === dropItem.id);
+            const dragIndex = copyDocuments.categories.findIndex(item => item.id === dragItem.id);
+            copyDocuments.categories[dragIndex] = null;
+            copyDocuments.categories.splice(dropIndex + 1, 0, dragItem);
+            copyDocuments.categories = copyDocuments.categories.filter(item => item);
             this.$emit('update:documents', copyDocuments);
         }
     },

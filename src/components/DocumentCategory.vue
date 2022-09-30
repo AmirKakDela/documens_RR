@@ -1,5 +1,12 @@
 <template>
-    <div class='document document-category'>
+    <div
+        class='document document-category'
+        draggable='true'
+        @dragstart='onDragStart($event, category)'
+        @drop='onDrop($event, category)'
+        @dragover.prevent
+        @dragenter.prevent
+    >
         <div class='document__main'>
             <arrow-button :toTop='isOpen' @click='open' :disabled='!category.children.length'></arrow-button>
             <div class='document__name'>{{ category.name }}</div>
@@ -27,7 +34,7 @@ export default {
     props: {
         category: Object
     },
-    emits: ['dropChild'],
+    emits: ['dropChild', 'drop'],
     data() {
         return {
             isOpen: true
@@ -38,7 +45,14 @@ export default {
             this.isOpen = !this.isOpen;
         },
         onDropChild(dragItem, dropItem) {
-            this.$emit('dropChild', dragItem, dropItem)
+            this.$emit('dropChild', dragItem, dropItem);
+        },
+        onDragStart(e, category) {
+            e.dataTransfer.setData('dragItem', JSON.stringify(category));
+        },
+        onDrop(e, dropItem) {
+            const dragItem = JSON.parse(e.dataTransfer.getData('dragItem'));
+            this.$emit('drop', dragItem, dropItem);
         }
     }
 };
@@ -54,6 +68,14 @@ export default {
     justify-content: space-between;
     padding: 0 16px;
     gap: 10px;
+
+    &.draggable {
+        box-shadow: 0 3px 16px rgba(0, 102, 255, 0.7);
+    }
+
+    &.droppable {
+        border-bottom: 2px solid blue;
+    }
 
     &__main {
         display: flex;
