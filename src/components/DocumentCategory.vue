@@ -3,9 +3,7 @@
         class='document document-category'
         draggable='true'
         @dragstart='onDragStart($event, category)'
-        @drop='onDrop($event, category)'
-        @dragover.prevent
-        @dragenter.prevent
+        @dragend='onDragEnd($event)'
     >
         <div class='document__main'>
             <arrow-button :toTop='isOpen' @click='open' :disabled='!category.children.length'></arrow-button>
@@ -14,6 +12,12 @@
         </div>
         <div class='document__actions'>
             <document-actions></document-actions>
+        </div>
+        <div class='drop-zone' @drop='onDrop($event, category)'
+             @dragover.prevent
+             @dragenter.prevent='onDragOver($event)'
+             @dragleave='onDragLeave($event)'>
+            <div class='line'></div>
         </div>
     </div>
     <template v-if='isOpen'>
@@ -48,11 +52,22 @@ export default {
             this.$emit('dropChild', dragItem, dropItem);
         },
         onDragStart(e, category) {
+            e.target.classList.add('draggable')
             e.dataTransfer.setData('dragItem', JSON.stringify(category));
         },
         onDrop(e, dropItem) {
             const dragItem = JSON.parse(e.dataTransfer.getData('dragItem'));
+            e.target.classList.remove('droppable');
             this.$emit('drop', dragItem, dropItem);
+        },
+        onDragOver(e) {
+            e.target.classList.add('droppable');
+        },
+        onDragLeave(e) {
+            e.target.classList.remove('droppable');
+        },
+        onDragEnd(e) {
+            e.target.classList.remove('draggable');
         }
     }
 };
@@ -68,14 +83,38 @@ export default {
     justify-content: space-between;
     padding: 0 16px;
     gap: 10px;
+    position: relative;
+    z-index: 10;
 
     &.draggable {
-        box-shadow: 0 3px 16px rgba(0, 102, 255, 0.7);
+        opacity: 0.2;
     }
 
-    &.droppable {
-        border-bottom: 2px solid blue;
+    .drop-zone {
+        height: 50%;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        &.droppable {
+            .line {
+                opacity: 1;
+            }
+        }
     }
+
+    .line {
+        height: 5px;
+        background-color: #0066FF;
+        width: 100%;
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        opacity: 0;
+        transition: .15s ease-in-out all;
+    }
+
 
     &__main {
         display: flex;
