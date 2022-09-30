@@ -92,8 +92,24 @@ export default {
                     [category.children[dragIndex], category.children[dropIndex]] = [category.children[dropIndex], category.children[dragIndex]];
                 }
             } else {
+                // todo можно попробовать уменьшить количество кода
+                dragItem.categoryId = dropCategory ? dropCategory.id : dropCategory;
+                dropItem.categoryId = dragCategory ? dragCategory.id : dragCategory;
                 if (dragCategory && !dropCategory) {
-                    //...
+                    const dragIndex = dragCategory.children.findIndex(item => item.id === dragItem.id);
+                    const dropIndex = copyDocuments.children.findIndex(item => item.id === dropItem.id);
+                    dragCategory.children[dragIndex] = dropItem;
+                    copyDocuments.children[dropIndex] = dragItem;
+                } else if (!dragCategory && dropCategory) {
+                    const dragIndex = copyDocuments.children.findIndex(item => item.id === dragItem.id);
+                    const dropIndex = dropCategory.children.findIndex(item => item.id === dropItem.id);
+                    copyDocuments.children[dragIndex] = dropItem;
+                    dropCategory.children[dropIndex] = dragItem;
+                } else if (dragCategory && dropCategory) {
+                    const dragIndex = dragCategory.children.findIndex(item => item.id === dragItem.id);
+                    const dropIndex = dropCategory.children.findIndex(item => item.id === dropItem.id);
+                    dragCategory.children[dragIndex] = dropItem;
+                    dropCategory.children[dropIndex] = dragItem;
                 }
             }
             this.$emit('update:documents', copyDocuments);
