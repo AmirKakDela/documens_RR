@@ -11,7 +11,7 @@
             <div class='document__description'>{{ category.description }}</div>
         </div>
         <div class='document__actions'>
-            <document-actions @customDragStart='onDragStart($event, category)'></document-actions>
+            <document-actions :item='category'></document-actions>
         </div>
         <div class='line'></div>
     </div>
@@ -49,9 +49,6 @@ export default {
         onDropChild(dragItem, dropItem) {
             this.$emit('dropChild', dragItem, dropItem);
         },
-        onDragStart(e, category) {
-            e.dataTransfer.setData('dragItem', JSON.stringify(category));
-        },
         onDrop(e, dropItem) {
             const dragItem = JSON.parse(e.dataTransfer.getData('dragItem'));
             e.target.classList.remove('droppable');
@@ -61,10 +58,7 @@ export default {
             draggable.onDragOver(e);
         },
         onDragLeave(e) {
-            e.target.classList.remove('droppable');
-        },
-        onDragEnd(e) {
-            e.target.classList.remove('draggable');
+            draggable.onDragLeave(e);
         }
     }
 };

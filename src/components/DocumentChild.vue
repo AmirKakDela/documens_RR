@@ -1,10 +1,9 @@
 <template>
     <div class='document document-child'
-         draggable='true'
-         @dragstart='onDragStart($event, child)'
          @drop='onDrop($event, child)'
+         @dragenter.prevent='onDragOver($event)'
+         @dragleave='onDragLeave($event)'
          @dragover.prevent
-         @dragenter.prevent
     >
         <div class='document__main'>
             <div class='document__name'>{{ child.name }}</div>
@@ -12,13 +11,17 @@
             <div class='document__description'>{{ child.description }}</div>
         </div>
         <div class='document__actions'>
-            <document-actions></document-actions>
+            <document-actions :item='child'></document-actions>
         </div>
+        <div class='line'></div>
     </div>
 </template>
 
 <script>
 import DocumentActions from '@/components/DocumentActions';
+import {Draggable} from '@/services/draggable';
+
+const draggable = new Draggable();
 
 export default {
     name: 'document-child',
@@ -33,17 +36,25 @@ export default {
         },
         onDrop(e, dropItem) {
             const dragItem = JSON.parse(e.dataTransfer.getData('dragItem'));
+            e.target.classList.remove('droppable');
             this.$emit('dropChild', dragItem, dropItem);
+        },
+        onDragOver(e) {
+            draggable.onDragOver(e);
+        },
+        onDragLeave(e) {
+            draggable.onDragLeave(e);
         }
-
     }
 };
 </script>
 
-<style scoped lang='less'>
-
-.document-child {
-    height: 35px;
+<style lang='less'>
+.document {
+    &.document-child {
+        height: 35px;
+    }
 }
+
 
 </style>

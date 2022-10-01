@@ -32,10 +32,12 @@ const draggable = new Draggable();
 export default {
     name: 'DocumentActions',
     components: {BaseIcon, BaseButton},
+    props: {
+        item: Object
+    },
     methods: {
         onDragStart(e) {
-            this.$emit('customDragStart', e)
-            draggable.onDragStart(e)
+            draggable.onDragStart(e, this.item)
         },
         onDrag(e) {
             draggable.onDrag(e)
@@ -44,7 +46,6 @@ export default {
             draggable.onDragEnd(e)
         },
         onDragOver(e) {
-            console.log('actions DragOver');
         }
     }
 };

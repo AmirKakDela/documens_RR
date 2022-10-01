@@ -24,7 +24,8 @@ export class Draggable {
         this.node.style.left = e.x - this.node.offsetWidth / 2 + 'px';
     }
 
-    onDragStart(e) {
+    onDragStart(e, dragItem) {
+        e.dataTransfer.setData('dragItem', JSON.stringify(dragItem));
         e.dataTransfer.setDragImage(e.target, window.outerWidth, window.outerHeight);
         const dragParent = e.currentTarget.parentNode.parentNode.parentNode;
         this.toggleDropZones(dragParent.classList, 'none');
@@ -41,6 +42,10 @@ export class Draggable {
 
     onDragOver(e) {
         if (!e.target.classList.contains('draggable')) e.target.classList.add('droppable');
+    }
+
+    onDragLeave(e) {
+        e.target.classList.remove('droppable');
     }
 
     toggleDropZones(parentClassName, pointerEvents = 'auto') {
