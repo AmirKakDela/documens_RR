@@ -19,7 +19,18 @@ p {
   margin: 0;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 
 #app {
   padding: 20px;
+}
+
+.draggable-active {
+  position: absolute !important;
+  z-index: 100;
+  top: -300px;
+  box-shadow: 0 3px 16px rgba(0, 102, 255, 0.7);
 }

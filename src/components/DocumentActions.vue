@@ -10,7 +10,12 @@
                 <base-icon name='trash'></base-icon>
             </template>
         </base-button>
-        <base-button :onlyIcon='true' class='dnd'>
+        <base-button :onlyIcon='true' class='dnd'
+                     draggable='true'
+                     @dragstart='onDragStart($event)'
+                     @drag='onDrag($event)'
+                     @dragend='onDragEnd($event)'
+        >
             <template #icon>
                 <base-icon name='dnd'></base-icon>
             </template>
@@ -21,10 +26,30 @@
 <script>
 import BaseButton from '@/components/common/BaseButton';
 import BaseIcon from '@/components/common/BaseIcon';
-
+import {Draggable} from '@/services/draggable';
+const draggable = new Draggable()
 export default {
     name: 'DocumentActions',
-    components: {BaseIcon, BaseButton}
+    components: {BaseIcon, BaseButton},
+    methods: {
+        onDragStart(e) {
+            e.dataTransfer.setDragImage(e.target, window.outerWidth, window.outerHeight);
+            const dragParent = e.currentTarget.parentNode.parentNode.parentNode;
+            draggable.setNode(dragParent.className, dragParent.innerHTML);
+            dragParent.classList.add('draggable');
+        },
+        onDrag(e) {
+            const node = draggable.getNode();
+            node.style.top = e.y + 'px';
+            node.style.left = e.x - node.offsetWidth  + 'px';
+            node.style.display = 'flex';
+        },
+        onDragEnd(e) {
+            const dragParent = e.currentTarget.parentNode.parentNode.parentNode;
+            dragParent.classList.remove('draggable')
+            draggable.removeNode();
+        }
+    }
 };
 </script>
 
@@ -43,6 +68,7 @@ export default {
         }
 
         &.dnd {
+            cursor: grab;
             &:active {
                 position: static;
             }
