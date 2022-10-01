@@ -1,9 +1,9 @@
 <template>
-    <div
-        class='document document-category'
-        draggable='true'
-        @dragstart='onDragStart($event, category)'
-        @dragend='onDragEnd($event)'
+    <div class='document document-category'
+         @drop='onDrop($event, category)'
+         @dragover.prevent
+         @dragenter.prevent='onDragOver($event)'
+         @dragleave='onDragLeave($event)'
     >
         <div class='document__main'>
             <arrow-button :toTop='isOpen' @click='open' :disabled='!category.children.length'></arrow-button>
@@ -11,14 +11,9 @@
             <div class='document__description'>{{ category.description }}</div>
         </div>
         <div class='document__actions'>
-            <document-actions></document-actions>
+            <document-actions @customDragStart='onDragStart($event, category)'></document-actions>
         </div>
-        <div class='drop-zone' @drop='onDrop($event, category)'
-             @dragover.prevent
-             @dragenter.prevent='onDragOver($event)'
-             @dragleave='onDragLeave($event)'>
-            <div class='line'></div>
-        </div>
+        <div class='line'></div>
     </div>
     <template v-if='isOpen'>
         <document-child v-for='child in category.children' :key='child.id' :child='child'
@@ -31,6 +26,9 @@
 import DocumentChild from '@/components/DocumentChild';
 import ArrowButton from '@/components/common/ArrowButton';
 import DocumentActions from '@/components/DocumentActions';
+import {Draggable} from '@/services/draggable';
+
+const draggable = new Draggable();
 
 export default {
     name: 'document-category',
@@ -41,7 +39,7 @@ export default {
     emits: ['dropChild', 'drop'],
     data() {
         return {
-            isOpen: true
+            isOpen: false
         };
     },
     methods: {
@@ -52,7 +50,6 @@ export default {
             this.$emit('dropChild', dragItem, dropItem);
         },
         onDragStart(e, category) {
-            e.target.classList.add('draggable')
             e.dataTransfer.setData('dragItem', JSON.stringify(category));
         },
         onDrop(e, dropItem) {
@@ -61,7 +58,7 @@ export default {
             this.$emit('drop', dragItem, dropItem);
         },
         onDragOver(e) {
-            e.target.classList.add('droppable');
+            draggable.onDragOver(e);
         },
         onDragLeave(e) {
             e.target.classList.remove('droppable');
@@ -84,23 +81,15 @@ export default {
     padding: 0 16px;
     gap: 10px;
     position: relative;
-    z-index: 10;
+    background: white;
 
     &.draggable {
         opacity: 0.2;
     }
 
-    .drop-zone {
-        height: 50%;
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-
-        &.droppable {
-            .line {
-                opacity: 1;
-            }
+    &.droppable {
+        .line {
+            opacity: 1;
         }
     }
 

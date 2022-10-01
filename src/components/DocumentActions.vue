@@ -1,5 +1,5 @@
 <template>
-    <div class='document-actions'>
+    <div class='document-actions' @dragenter.prevent='onDragOver($event)'>
         <base-button :onlyIcon='true' class='edit'>
             <template #icon>
                 <base-icon name='edit'></base-icon>
@@ -27,27 +27,24 @@
 import BaseButton from '@/components/common/BaseButton';
 import BaseIcon from '@/components/common/BaseIcon';
 import {Draggable} from '@/services/draggable';
-const draggable = new Draggable()
+const draggable = new Draggable();
+
 export default {
     name: 'DocumentActions',
     components: {BaseIcon, BaseButton},
     methods: {
         onDragStart(e) {
-            e.dataTransfer.setDragImage(e.target, window.outerWidth, window.outerHeight);
-            const dragParent = e.currentTarget.parentNode.parentNode.parentNode;
-            draggable.setNode(dragParent.className, dragParent.innerHTML);
-            dragParent.classList.add('draggable');
+            this.$emit('customDragStart', e)
+            draggable.onDragStart(e)
         },
         onDrag(e) {
-            const node = draggable.getNode();
-            node.style.top = e.y + 'px';
-            node.style.left = e.x - node.offsetWidth  + 'px';
-            node.style.display = 'flex';
+            draggable.onDrag(e)
         },
         onDragEnd(e) {
-            const dragParent = e.currentTarget.parentNode.parentNode.parentNode;
-            dragParent.classList.remove('draggable')
-            draggable.removeNode();
+            draggable.onDragEnd(e)
+        },
+        onDragOver(e) {
+            console.log('actions DragOver');
         }
     }
 };
